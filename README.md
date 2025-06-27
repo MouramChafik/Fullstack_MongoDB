@@ -23,7 +23,7 @@
 
 ## Structure du projet
 
-<pre> ```bash Projet_MongoDB/<pre> │ ├── Frontend │ </pre>└── src/ │ └── components/ │ └── App.js │ └── index.js │ ├── Backend Express │ └── models/ │ └── routes/ │ └── server.js │ ├── .gitignore ├── README.md ├── .env # Variables d'environnement (MONGODB_URI) ``` </pre>
+<pre> ```bash Projet_MongoDB/<pre> │ ├── Frontend </pre><pre>│ └── src/ </pre><pre>│ └── components/ </pre><pre>│ └── App.js </pre><pre>│ └── index.js </pre><pre>│ ├── Backend Express </pre><pre>│ └── models/ </pre><pre>│ └── routes/ </pre><pre>│ └── server.js </pre><pre> │ ├── .gitignore </pre><pre> ├── README.md </pre><pre>├── .env # Variables d'environnement (MONGODB_URI) ``` </pre>
 
 
 ## Installation & lancement
