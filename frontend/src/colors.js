@@ -8,12 +8,13 @@ const colors = {
 
   // Primary colors
   primary: "#007bff",
-  secondary: "rgb(86 175 255)",
+  secondary: "#006DCC",
   success: "#28a745",
   danger: "#dc3545",
   warning: "#ffc107",
   info: "#17a2b8",
   light: "#f8f9fa",
+  white: "#ffffff",
   dark: "#343a40",
   textPrimary: "#212529",
   textSecondary: "#6c757d",

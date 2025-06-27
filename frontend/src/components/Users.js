@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import MoviesPopup from './/MoviesPopup';
 import colors from '../colors';
+import avatarImage from '../assets/images/profile.avif';
 
 function Users({ users = [] }) {
   const itemsPerPage = 8;
@@ -15,23 +16,32 @@ function Users({ users = [] }) {
     <div>
       <h2>Utilisateurs</h2>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', justifyContent: 'center' }}>
-        {currentUsers.map((u) => (
-          <div key={u._id || u.name} style={cardStyle}>
-            <h3>{u.name || 'Nom inconnu'}</h3>
-            <p><strong>Genre :</strong> {u.gender || 'Non précisé'}</p>
-            <p><strong>Âge :</strong> {u.age ?? 'Inconnu'}</p>
-            <p><strong>Métier :</strong> {u.occupation || 'Non précisé'}</p>
+  {currentUsers.map((u) => (
+    <div key={u._id || u.name} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <div style={cardStyle}>
+        <div style={circleStyle}>
+         <img
+        src={avatarImage}
+        alt={u.name}
+        style={imageStyle}
+      />
+        </div>
+        <h3>{u.name || 'Nom inconnu'}</h3>
+        <p><strong>Genre :</strong> {u.gender || 'Non précisé'}</p>
+        <p><strong>Âge :</strong> {u.age ?? 'Inconnu'}</p>
+        <p><strong>Métier :</strong> {u.occupation || 'Non précisé'}</p>
 
-            {Array.isArray(u.movies) && u.movies.length > 0 && (
-              <button
-                style={btnBase}
-                onClick={() => setSelectedUser(u)}
-              >
-                Voir films notés
-              </button>
-            )}
-          </div>
-        ))}
+        {Array.isArray(u.movies) && u.movies.length > 0 && (
+          <button
+            style={btnBase}
+            onClick={() => setSelectedUser(u)}
+          >
+            Voir films notés
+          </button>
+        )}
+      </div>
+    </div>
+  ))}
       </div>
 
       <div style={paginationStyle}>
@@ -71,6 +81,7 @@ const cardStyle = {
   padding: '12px',
   width: '250px',
   backgroundColor: colors.secondary,
+  color: colors.white,
 };
 
 const paginationStyle = {
@@ -90,7 +101,7 @@ const btnBase = {
   background: colors.success,
   color: '#ffffff',
   cursor: 'pointer',
-  fontWeight: '500',
+  fontWeight: 'bolder',
   fontSize: '14px',
   boxShadow: '0 2px 6px rgba(0, 123, 255, 0.2)',
 };
@@ -116,6 +127,22 @@ const pageIndicatorStyle = {
   fontSize: '20px',
   fontGrid: 'Arial, sans-serif',
 };
+const imageStyle = {
+   position: 'absolute',       
+   top: -21,
+   left: -68,
+   height: 143,
+   width: 'auto',            
+   objectFit: 'cover', 
+};
 
+const circleStyle = {
+  width: '100px',            
+  height: '100px',
+  borderRadius: '50%',       
+  overflow: 'hidden',        
+  position: 'relative',       
+  border: '2px solid #007bff', 
+};
 
 export default Users;
