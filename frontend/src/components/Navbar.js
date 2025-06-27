@@ -1,5 +1,6 @@
 import React from 'react';
 import SearchBar from './SearchBar';
+import colors from '../colors';
 
 function Navbar({ activeView, setActiveView, onSearch, onSelect }) {
   return (

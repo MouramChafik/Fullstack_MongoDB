@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import MoviesPopup from './/MoviesPopup';
+import colors from '../colors';
 
 function Users({ users = [] }) {
   const itemsPerPage = 8;
@@ -41,7 +42,7 @@ function Users({ users = [] }) {
         >
           Précédent
         </button>
-        <span style={pageIndicatorStyle} >Page {currentPage} / {totalPages}</span>
+        <span style={pageIndicatorStyle} >{currentPage} / {totalPages}</span>
         <button
           style={btnpaginationNext}
           onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
@@ -69,7 +70,7 @@ const cardStyle = {
   borderRadius: '8px',
   padding: '12px',
   width: '250px',
-  backgroundColor: '#f0f8ff',
+  backgroundColor: colors.secondary,
 };
 
 const paginationStyle = {
@@ -85,9 +86,9 @@ const btnBase = {
   borderRadius: '8px',
   borderWidth: '1px',
   borderStyle: 'solid',
-  borderColor: 'rgb(240, 248, 255)',
-  background: 'rgb(145, 196, 244)',
-  color: '#000000',
+  borderColor: colors.success,
+  background: colors.success,
+  color: '#ffffff',
   cursor: 'pointer',
   fontWeight: '500',
   fontSize: '14px',
@@ -96,16 +97,21 @@ const btnBase = {
 
 const btnpaginationPrevious = {
   ...btnBase,
+  background: colors.fourth,
+  borderColor: colors.fourth,
 };
 
 const btnpaginationNext = {
   ...btnBase,
   marginLeft: '10px',
+    background: colors.fourth,
+    borderColor: colors.fourth,
+
 };
 
 const pageIndicatorStyle = {
   padding: '6px 12px',
-  color: 'rgb(145, 196, 244)',
+  color: colors.success,
   fontWeight: '800',
   fontSize: '20px',
   fontGrid: 'Arial, sans-serif',

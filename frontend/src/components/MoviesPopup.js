@@ -1,4 +1,5 @@
 import React from 'react';
+import colors from '../colors';
 
 function MoviesPopup({ movies, userName, isOpen, onClose }) {
   if (!isOpen) return null;

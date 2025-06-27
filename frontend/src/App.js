@@ -3,6 +3,7 @@ import axios from "axios";
 import Movies from "./components/Movies";
 import Users from "./components/Users";
 import Navbar from "./components/Navbar";
+import colors from './colors';
 
 function App() {
   const [movies, setMovies] = useState([]);
@@ -27,7 +28,7 @@ function App() {
       .then((res) => {
         if (activeView === "movies") setMovies(res.data.movies || []);
         else setUsers(res.data.users || []);
-        setFilteredItems([]); 
+        setFilteredItems([]);
       })
       .catch(console.error)
       .finally(() => setLoading(false));
@@ -44,8 +45,8 @@ function App() {
         setActiveView={setActiveView}
         onSelect={handleSelect}
       />
-              <h1>Dashboard</h1>
-      <div style={{ padding: "20px", height: "50vh",}}>
+      <h1 style={dashboardTitleStyle}>Dashboard</h1>
+      <div style={{ padding: "20px", height: "50vh" }}>
         {loading && (
           <div
             style={{
@@ -57,8 +58,12 @@ function App() {
               height: "100%",
             }}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="80"  
-  height="80">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 200 200"
+              width="80"
+              height="80"
+            >
               <radialGradient
                 id="a10"
                 cx=".66"
@@ -124,7 +129,13 @@ function App() {
                 r="70"
               ></circle>
             </svg>
-            <p style={{ marginLeft: "20px", fontSize: "18px", color: "rgb(86 175 255)" }}>
+            <p
+              style={{
+                marginLeft: "20px",
+                fontSize: "18px",
+                color: "rgb(86 175 255)",
+              }}
+            >
               Chargement...
             </p>
           </div>
@@ -142,3 +153,13 @@ function App() {
 }
 
 export default App;
+
+const dashboardTitleStyle = {
+  fontSize: "2.5rem",
+  fontWeight: "700",
+  color: colors.secondary,
+  marginBottom: "20px",
+  fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+  textAlign: "center",
+  textShadow: "1px 1px 2px rgba(0,0,0,0.1)",
+};

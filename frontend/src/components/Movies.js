@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import colors from '../colors';
 
 function Movies({ movies = [] }) {
   const itemsPerPage = 15;
