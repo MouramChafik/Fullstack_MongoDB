@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import MoviesPopup from './/MoviesPopup';
-import { fontGrid } from '@mui/material/styles/cssUtils';
 
 function Users({ users = [] }) {
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedUser, setSelectedUser] = useState(null); // utilisateur pour popup
+  const [selectedUser, setSelectedUser] = useState(null); 
 
   const totalPages = Math.ceil(users.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;

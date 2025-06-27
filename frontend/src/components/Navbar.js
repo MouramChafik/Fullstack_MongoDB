@@ -31,10 +31,10 @@ const navbarStyle = {
   justifyContent: 'space-between',
   alignItems: 'center',
   padding: '10px 20px',
-  backgroundColor: '#007bff',
+  backgroundColor: '#fff',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
   color: 'white',
   marginBottom: '20px',
-  borderRadius: '8px',
 };
 
 const linksStyle = {

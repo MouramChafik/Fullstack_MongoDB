@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
   password: String,
   movies: [
     {
-      movieid: String, // ou mongoose.Schema.Types.ObjectId si lié à Movie
+      movieid: String, 
       rating: Number,
     }
   ]
