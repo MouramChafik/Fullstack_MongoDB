@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
+import MoviesPopup from './/MoviesPopup';
 
 function Users({ users = [] }) {
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedUser, setSelectedUser] = useState(null); // utilisateur pour popup
 
   const totalPages = Math.ceil(users.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentUsers = users.slice(startIndex, startIndex + itemsPerPage);
-
-  console.log("Utilisateurs reçus :", currentUsers);
 
   return (
     <div>
@@ -16,41 +16,50 @@ function Users({ users = [] }) {
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', justifyContent: 'center' }}>
         {currentUsers.map((u) => (
           <div key={u._id || u.name} style={cardStyle}>
-            <h3>{u.name || "Nom inconnu"}</h3>
-            <p><strong>Genre :</strong> {u.gender || "Non précisé"}</p>
-            <p><strong>Âge :</strong> {u.age ?? "Inconnu"}</p>
-            <p><strong>Métier :</strong> {u.occupation || "Non précisé"}</p>
+            <h3>{u.name || 'Nom inconnu'}</h3>
+            <p><strong>Genre :</strong> {u.gender || 'Non précisé'}</p>
+            <p><strong>Âge :</strong> {u.age ?? 'Inconnu'}</p>
+            <p><strong>Métier :</strong> {u.occupation || 'Non précisé'}</p>
 
             {Array.isArray(u.movies) && u.movies.length > 0 && (
-              <details>
-                <summary>Films notés</summary>
-                <ul>
-                  {u.movies.map((m, i) => (
-                    <>
-                      <li key={`${u._id}-${i}-movieid`}>
-                        Film id: {m.movieid || "Inconnu"}
-                      </li>
-                      <li key={`${u._id}-${i}-rating`}>
-                        Note : {m.rating ?? "N/A"}
-                      </li>
-                    </>
-                  ))}
-                </ul>
-              </details>
+              <button
+                style={btnBase}
+                onClick={() => setSelectedUser(u)}
+              >
+                Voir films notés
+              </button>
             )}
           </div>
         ))}
       </div>
 
       <div style={paginationStyle}>
-        <button onClick={() => setCurrentPage(p => Math.max(p - 1, 1))} disabled={currentPage === 1}>
+        <button
+          style={btnpaginationPrevious}
+          onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
+          disabled={currentPage === 1}
+        >
           Précédent
         </button>
         <span>Page {currentPage} / {totalPages}</span>
-        <button onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages}>
+        <button
+          style={btnpaginationNext}
+          onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
+          disabled={currentPage === totalPages}
+        >
           Suivant
         </button>
       </div>
+
+      {/* Popup films notés */}
+      {selectedUser && (
+        <MoviesPopup
+          movies={selectedUser.movies}
+          userName={selectedUser.name || 'Utilisateur'}
+          isOpen={!!selectedUser}
+          onClose={() => setSelectedUser(null)}
+        />
+      )}
     </div>
   );
 }
@@ -69,6 +78,29 @@ const paginationStyle = {
   alignItems: 'center',
   gap: '10px',
   justifyContent: 'center',
+};
+
+const btnBase = {
+  padding: '10px 20px',
+  borderRadius: '8px',
+  borderWidth: '1px',
+  borderStyle: 'solid',
+  borderColor: 'rgb(240, 248, 255)',
+  background: 'rgb(145, 196, 244)',
+  color: '#000000',
+  cursor: 'pointer',
+  fontWeight: '500',
+  fontSize: '14px',
+  boxShadow: '0 2px 6px rgba(0, 123, 255, 0.2)',
+};
+
+const btnpaginationPrevious = {
+  ...btnBase,
+};
+
+const btnpaginationNext = {
+  ...btnBase,
+  marginLeft: '10px',
 };
 
 export default Users;
