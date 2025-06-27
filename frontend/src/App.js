@@ -8,6 +8,7 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [users, setUsers] = useState([]);
   const [activeView, setActiveView] = useState("movies");
+  const [filteredItems, setFilteredItems] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -26,14 +27,14 @@ function App() {
       .then((res) => {
         if (activeView === "movies") setMovies(res.data.movies || []);
         else setUsers(res.data.users || []);
+        setFilteredItems([]); // reset à chaque changement
       })
       .catch(console.error)
       .finally(() => setLoading(false));
   };
 
-  const handleSearch = (item) => {
-    // filtre les résultats
-    console.log("Item sélectionné:", item);
+  const handleSelect = (item) => {
+    setFilteredItems([item]);
   };
 
   return (
@@ -41,15 +42,19 @@ function App() {
       <Navbar
         activeView={activeView}
         setActiveView={setActiveView}
-        onSearch={handleSearch}
+        onSelect={handleSelect}
       />
       <div style={{ padding: "20px" }}>
         <h1>Dashboard</h1>
 
         {loading && <p>Chargement en cours...</p>}
 
-        {!loading && activeView === "movies" && <Movies movies={movies} />}
-        {!loading && activeView === "users" && <Users users={users} />}
+        {!loading && activeView === "movies" && (
+          <Movies movies={filteredItems.length > 0 ? filteredItems : movies} />
+        )}
+        {!loading && activeView === "users" && (
+          <Users users={filteredItems.length > 0 ? filteredItems : users} />
+        )}
       </div>
     </>
   );

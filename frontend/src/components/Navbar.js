@@ -1,7 +1,7 @@
 import React from 'react';
 import SearchBar from './SearchBar';
 
-function Navbar({ activeView, setActiveView, onSearch }) {
+function Navbar({ activeView, setActiveView, onSearch, onSelect }) {
   return (
     <nav style={navbarStyle}>
       <div style={linksStyle}>
@@ -18,7 +18,7 @@ function Navbar({ activeView, setActiveView, onSearch }) {
           Utilisateurs
         </button>
       </div>
-      <SearchBar onSearch={onSearch} activeView={activeView} />
+      <SearchBar onSearch={onSearch} onSelect={onSelect} activeView={activeView} />
     </nav>
   );
 }
