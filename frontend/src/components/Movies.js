@@ -23,9 +23,21 @@ function Movies({ movies = [] }) {
         ))}
       </div>
       <div style={paginationStyle}>
-        <button onClick={() => setCurrentPage(p => Math.max(p - 1, 1))} disabled={currentPage === 1}>Précédent</button>
-        <span>Page {currentPage} / {totalPages}</span>
-        <button onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages}>Suivant</button>
+        <button
+          style={btnpaginationPrevious}
+          onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
+          disabled={currentPage === 1}
+        >
+          Précédent
+        </button>
+        <span style={pageIndicatorStyle} >Page {currentPage} / {totalPages}</span>
+        <button
+          style={btnpaginationNext}
+          onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
+          disabled={currentPage === totalPages}
+        >
+          Suivant
+        </button>
       </div>
     </div>
   );
@@ -36,7 +48,7 @@ const cardStyle = {
   borderRadius: '8px',
   padding: '12px',
   width: '200px',
-  backgroundColor: '#f9f9f9',
+  backgroundColor: 'rgb(240, 248, 255)',
 };
 
 const paginationStyle = {
@@ -45,6 +57,36 @@ const paginationStyle = {
   alignItems: 'center',
   gap: '10px',
   justifyContent: 'center',
+};
+const btnBase = {
+  padding: '10px 20px',
+  borderRadius: '8px',
+  borderWidth: '1px',
+  borderStyle: 'solid',
+  borderColor: 'rgb(240, 248, 255)',
+  background: 'rgb(145, 196, 244)',
+  color: '#000000',
+  cursor: 'pointer',
+  fontWeight: '500',
+  fontSize: '14px',
+  boxShadow: '0 2px 6px rgba(0, 123, 255, 0.2)',
+};
+
+const btnpaginationPrevious = {
+  ...btnBase,
+};
+
+const btnpaginationNext = {
+  ...btnBase,
+  marginLeft: '10px',
+};
+
+const pageIndicatorStyle = {
+  padding: '6px 12px',
+  color: 'rgb(145, 196, 244)',
+  fontWeight: '800',
+  fontSize: '20px',
+  fontGrid: 'Arial, sans-serif',
 };
 
 export default Movies;

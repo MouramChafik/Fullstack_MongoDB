@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import MoviesPopup from './/MoviesPopup';
+import { fontGrid } from '@mui/material/styles/cssUtils';
 
 function Users({ users = [] }) {
   const itemsPerPage = 10;
@@ -41,7 +42,7 @@ function Users({ users = [] }) {
         >
           Précédent
         </button>
-        <span>Page {currentPage} / {totalPages}</span>
+        <span style={pageIndicatorStyle} >Page {currentPage} / {totalPages}</span>
         <button
           style={btnpaginationNext}
           onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
@@ -102,5 +103,14 @@ const btnpaginationNext = {
   ...btnBase,
   marginLeft: '10px',
 };
+
+const pageIndicatorStyle = {
+  padding: '6px 12px',
+  color: 'rgb(145, 196, 244)',
+  fontWeight: '800',
+  fontSize: '20px',
+  fontGrid: 'Arial, sans-serif',
+};
+
 
 export default Users;
