@@ -32,7 +32,7 @@ function App() {
   return (
     <div style={{ padding: '20px' }}>
       <h1>Dashboard</h1>
-      <div style={{ marginBottom: '20px' }}>
+      <div style={{ marginBottom: '20px', display: 'flex', justifyContent: 'center' }}>
         <button onClick={() => setActiveView('movies')} style={activeView === 'movies' ? btnActive : btn}>
           Voir les films
         </button>
@@ -53,7 +53,9 @@ const btn = {
   marginRight: '10px',
   padding: '10px 20px',
   borderRadius: '5px',
-  border: '1px solid #ccc',
+  borderWidth: '1px',
+  borderStyle: 'solid',
+  borderColor: '#ccc',
   background: '#f0f0f0',
   cursor: 'pointer',
 };
@@ -62,7 +64,9 @@ const btnActive = {
   ...btn,
   background: '#007bff',
   color: '#fff',
-  borderColor: '#007bff',
+  borderColor: '#007bff', 
+  
 };
+
 
 export default App;

@@ -13,7 +13,7 @@ function Movies({ movies = [] }) {
   return (
     <div>
       <h2>Films</h2>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', justifyContent: 'center' }}>
         {currentMovies.map((m, idx) => (
           <div key={idx} style={cardStyle}>
             <h3>{m.title}</h3>
@@ -43,7 +43,8 @@ const paginationStyle = {
   marginTop: '20px',
   display: 'flex',
   alignItems: 'center',
-  gap: '10px'
+  gap: '10px',
+  justifyContent: 'center',
 };
 
 export default Movies;

@@ -13,7 +13,7 @@ function Users({ users = [] }) {
   return (
     <div>
       <h2>Utilisateurs</h2>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', justifyContent: 'center' }}>
         {currentUsers.map((u) => (
           <div key={u._id || u.name} style={cardStyle}>
             <h3>{u.name || "Nom inconnu"}</h3>
@@ -26,9 +26,14 @@ function Users({ users = [] }) {
                 <summary>Films notés</summary>
                 <ul>
                   {u.movies.map((m, i) => (
-                    <li key={`${u._id}-${i}`}>
-                      Film : {m.movieid || "Inconnu"} — Note : {m.rating ?? "N/A"}
-                    </li>
+                    <>
+                      <li key={`${u._id}-${i}-movieid`}>
+                        Film id: {m.movieid || "Inconnu"}
+                      </li>
+                      <li key={`${u._id}-${i}-rating`}>
+                        Note : {m.rating ?? "N/A"}
+                      </li>
+                    </>
                   ))}
                 </ul>
               </details>
@@ -62,7 +67,8 @@ const paginationStyle = {
   marginTop: '20px',
   display: 'flex',
   alignItems: 'center',
-  gap: '10px'
+  gap: '10px',
+  justifyContent: 'center',
 };
 
 export default Users;
