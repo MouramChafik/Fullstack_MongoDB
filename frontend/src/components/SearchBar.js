@@ -25,7 +25,7 @@ function SearchBar({ activeView, onSelect }) {
   };
 
   const handleSelect = (item) => {
-    setQuery(item.name || item.title || "");
+    setQuery("");
     setSuggestions([]);
     onSelect(item);
   };

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 function Movies({ movies = [] }) {
-  const itemsPerPage = 10;
+  const itemsPerPage = 15;
   const [currentPage, setCurrentPage] = useState(1);
 
   const totalPages = Math.ceil(movies.length / itemsPerPage);
