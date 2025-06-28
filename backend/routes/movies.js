@@ -24,4 +24,24 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.post('/batch', async (req, res) => {
+  const { ids } = req.body;
+
+  if (!Array.isArray(ids) || ids.length === 0) {
+    return res.status(400).json({ message: 'ids manquant ou vide' });
+  }
+
+  try {
+    const numericIds = ids.map(id => Number(id));
+
+    const movies = await Movie.find({ _id: { $in: numericIds } });
+    res.json({ movies });
+  } catch (error) {
+    console.error('Erreur dans /movies/batch:', error);
+    res.status(500).json({ message: 'Erreur serveur' });
+  }
+});
+
+
+
 module.exports = router;

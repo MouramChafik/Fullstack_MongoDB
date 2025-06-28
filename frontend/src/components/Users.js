@@ -1,47 +1,69 @@
 import React, { useState } from 'react';
-import MoviesPopup from './/MoviesPopup';
+import axios from 'axios';
+import MoviesPopup from './MoviesPopup'; // corrigé le chemin './MoviesPopup' au lieu de './/MoviesPopup'
 import colors from '../colors';
 import avatarImage from '../assets/images/profile.avif';
 
 function Users({ users = [] }) {
   const itemsPerPage = 8;
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedUser, setSelectedUser] = useState(null); 
+  const [popupMovies, setPopupMovies] = useState([]);
+  const [popupUserName, setPopupUserName] = useState('');
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const totalPages = Math.ceil(users.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentUsers = users.slice(startIndex, startIndex + itemsPerPage);
 
+  const handleShowMovies = async (user) => {
+  try {
+    const ids = user.movies.map(m => Number(m.movieid)).filter(Boolean);
+
+    const res = await axios.post('http://localhost:5000/movies/batch', { ids });
+
+    const moviesFromApi = res.data.movies || [];
+
+    const moviesWithRatings = moviesFromApi.map(movie => {
+      const userMovie = user.movies.find(m => Number(m.movieid) === movie._id);
+      return {
+        ...movie,
+        rating: userMovie ? userMovie.rating : 'N/A',
+      };
+    });
+
+    setPopupMovies(moviesWithRatings);
+    setPopupUserName(user.name);
+    setIsPopupOpen(true);
+  } catch (error) {
+    console.error('Erreur handleShowMovies:', error);
+  }
+};
+
+
   return (
     <div>
-      <h2>Utilisateurs</h2>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', justifyContent: 'center' }}>
-  {currentUsers.map((u) => (
-    <div key={u._id || u.name} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <div style={cardStyle}>
-        <div style={circleStyle}>
-         <img
-        src={avatarImage}
-        alt={u.name}
-        style={imageStyle}
-      />
-        </div>
-        <h3>{u.name || 'Nom inconnu'}</h3>
-        <p><strong>Genre :</strong> {u.gender || 'Non précisé'}</p>
-        <p><strong>Âge :</strong> {u.age ?? 'Inconnu'}</p>
-        <p><strong>Métier :</strong> {u.occupation || 'Non précisé'}</p>
+      <h2 style={usersTitle}>Utilisateurs :</h2>
 
-        {Array.isArray(u.movies) && u.movies.length > 0 && (
-          <button
-            style={btnBase}
-            onClick={() => setSelectedUser(u)}
-          >
-            Voir films notés
-          </button>
-        )}
-      </div>
-    </div>
-  ))}
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', justifyContent: 'center' }}>
+        {currentUsers.map((u) => (
+          <div key={u._id || u.name} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div style={cardStyle}>
+              <div style={circleStyle}>
+                <img src={avatarImage} alt={u.name} style={imageStyle} />
+              </div>
+              <h3>{u.name || 'Nom inconnu'}</h3>
+              <p><strong>Genre :</strong> {u.gender || 'Non précisé'}</p>
+              <p><strong>Âge :</strong> {u.age ?? 'Inconnu'}</p>
+              <p><strong>Métier :</strong> {u.occupation || 'Non précisé'}</p>
+
+              {Array.isArray(u.movies) && u.movies.length > 0 && (
+                <button style={btnBase} onClick={() => handleShowMovies(u)}>
+                  Voir films notés
+                </button>
+              )}
+            </div>
+          </div>
+        ))}
       </div>
 
       <div style={paginationStyle}>
@@ -52,7 +74,7 @@ function Users({ users = [] }) {
         >
           Précédent
         </button>
-        <span style={pageIndicatorStyle} >{currentPage} / {totalPages}</span>
+        <span style={pageIndicatorStyle}>{currentPage} / {totalPages}</span>
         <button
           style={btnpaginationNext}
           onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
@@ -63,18 +85,17 @@ function Users({ users = [] }) {
       </div>
 
       {/* Popup films notés */}
-      {selectedUser && (
-        <MoviesPopup
-          movies={selectedUser.movies}
-          userName={selectedUser.name || 'Utilisateur'}
-          isOpen={!!selectedUser}
-          onClose={() => setSelectedUser(null)}
-        />
-      )}
+      <MoviesPopup
+        movies={popupMovies}
+        userName={popupUserName}
+        isOpen={isPopupOpen}
+        onClose={() => setIsPopupOpen(false)}
+      />
     </div>
   );
 }
 
+// Styles
 const cardStyle = {
   border: '1px solid #ccc',
   borderRadius: '8px',
@@ -115,9 +136,8 @@ const btnpaginationPrevious = {
 const btnpaginationNext = {
   ...btnBase,
   marginLeft: '10px',
-    background: colors.fourth,
-    borderColor: colors.fourth,
-
+  background: colors.fourth,
+  borderColor: colors.fourth,
 };
 
 const pageIndicatorStyle = {
@@ -125,24 +145,31 @@ const pageIndicatorStyle = {
   color: colors.success,
   fontWeight: '800',
   fontSize: '20px',
-  fontGrid: 'Arial, sans-serif',
 };
+
 const imageStyle = {
-   position: 'absolute',       
-   top: -21,
-   left: -68,
-   height: 143,
-   width: 'auto',            
-   objectFit: 'cover', 
+  position: 'absolute',
+  top: -21,
+  left: -68,
+  height: 143,
+  width: 'auto',
+  objectFit: 'cover',
 };
 
 const circleStyle = {
-  width: '100px',            
+  width: '100px',
   height: '100px',
-  borderRadius: '50%',       
-  overflow: 'hidden',        
-  position: 'relative',       
-  border: '2px solid #007bff', 
+  borderRadius: '50%',
+  overflow: 'hidden',
+  position: 'relative',
+  border: '2px solid #007bff',
+};
+
+const usersTitle = {
+  color: colors.primary,
+  fontSize: '24px',
+  fontWeight: 'bold',
+  marginBottom: '20px',
 };
 
 export default Users;

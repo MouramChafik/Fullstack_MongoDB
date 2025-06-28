@@ -4,6 +4,7 @@ import colors from '../colors';
 function MoviesPopup({ movies, userName, isOpen, onClose }) {
   if (!isOpen) return null;
 
+  console.log('MoviesPopup rendered with movies:', movies);
   return (
     <div onClick={onClose} style={overlayStyle}>
       <div onClick={(e) => e.stopPropagation()} style={popupStyle}>
@@ -17,7 +18,8 @@ function MoviesPopup({ movies, userName, isOpen, onClose }) {
         <ul style={listStyle}>
           {movies.map((m, i) => (
             <li key={`${userName}-${i}`} style={itemStyle}>
-              <strong>Film id :</strong> {m.movieid || 'Inconnu'}<br />
+              <strong>Film id :</strong> {m._id  || 'Inconnu'}<br />
+              <strong>Titre :</strong> {m.title ?? 'N/A'}
               <strong>Note :</strong> {m.rating ?? 'N/A'}
             </li>
           ))}
