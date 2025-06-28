@@ -14,7 +14,7 @@ function Movies({ movies = [] }) {
 
   return (
     <div>
-      <h2>Films</h2>
+      <h2 style={moviesTitle}>Films</h2>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', justifyContent: 'center' }}>
         {currentMovies.map((m, idx) => (
           <div key={idx} style={cardStyle}>
@@ -23,8 +23,19 @@ function Movies({ movies = [] }) {
                     alt={m.name}
                     style={imageStyle}
                   />
-            <h3>{m.title}</h3>
-            <p><strong>Genres:</strong> {Array.isArray(m.genres) ? m.genres.join(', ') : m.genres}</p>
+<h3>
+  {m.title.split('(').length > 1
+    ? <>
+        {m.title.split('(')[0].trim()}
+        <br />
+        <p>
+        {'(' + m.title.split('(').slice(1).join('(')}
+        </p>
+      </>
+    : m.title
+  }
+</h3>
+            <p><strong>Genres:</strong> {Array.isArray(m.genres) ? m.genres.join(', ').replace(/\|/g, ' - ') : m.genres.replace(/\|/g, ' - ')}</p>
             {m.poster && <img src={m.poster} alt={m.title} style={{ width: '100%', height: 'auto' }} />}
           </div>
         ))}
@@ -109,5 +120,12 @@ const imageStyle = {
   borderRadius: '8px 8px 0 0',
   objectFit: 'cover',
   marginBottom: '12px',
+};
+
+const moviesTitle = {
+  color: colors.primary,
+  fontSize: '24px',
+  fontWeight: 'bold',
+  marginBottom: '20px',
 };
 export default Movies;

@@ -1,11 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-// ⚠️ importe tes modèles Mongoose
-const Movie = require('../models/movie');  // adapte le chemin
-const User = require('../models/user');    // adapte le chemin
+const Movie = require('../models/movie');  
+const User = require('../models/User');    
 
-// GET /search?type=movies&q=at
 router.get('/search', async (req, res) => {
     const { type, q } = req.query;
 
@@ -17,10 +15,8 @@ router.get('/search', async (req, res) => {
         let results = [];
 
         if (type === 'movies') {
-            // Cherche par titre
             results = await Movie.find({ title: { $regex: `^${q}`, $options: 'i' } }).limit(10);
         } else if (type === 'users') {
-            // Cherche par nom
             results = await User.find({ name: { $regex: `^${q}`, $options: 'i' } }).limit(10);
         } else {
             return res.status(400).json({ success: false, message: 'Type invalide' });
