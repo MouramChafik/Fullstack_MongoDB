@@ -33,6 +33,11 @@ function Series({ series = [] }) {
                 ? s.genre.join(", ").replace(/\|/g, " - ")
                 : s.genre.replace(/\|/g, " - ")}
             </p>
+            {s.language && (
+                <p>
+                    <strong>Langue:</strong> {s.language}
+                </p>
+            )}
             {s.year && (
               <p>
                 <strong>Année:</strong> {s.year}
@@ -43,18 +48,17 @@ function Series({ series = [] }) {
                 <strong>Saisons:</strong> {s.seasons}
               </p>
             )}
-            {s.status && (
-              <p>
-                <strong>Statut:</strong> {s.status}
-              </p>
-            )}
-            {s.poster && (
-              <img
-                src={s.poster}
-                alt={s.title}
-                style={{ width: "100%", height: "auto", marginTop: "10px" }}
-              />
-            )}
+            {
+                s.synopsis && (
+                  <p style={{ marginTop: "10px" }}>
+                    <strong>Synopsis:</strong> {s.synopsis}
+                  </p>
+                )}
+            {s.availableOn && (
+                <p>
+                    <strong>Disponible sur:</strong> {s.availableOn}
+                </p>
+                )}
           </div>
         ))}
       </div>

@@ -4,8 +4,8 @@ import Movies from "./components/Movies";
 import Users from "./components/Users";
 import Navbar from "./components/Navbar";
 import Dashboard from "./components/Dashboard";
-import colors from './colors';
-import  Home from "./components/Home";
+import colors from "./colors";
+import Home from "./components/Home";
 import Series from "./components/Series";
 
 function App() {
@@ -15,7 +15,6 @@ function App() {
   const [activeView, setActiveView] = useState("movies");
   const [filteredItems, setFilteredItems] = useState([]);
   const [loading, setLoading] = useState(false);
-  
 
   useEffect(() => {
     fetchData();
@@ -24,11 +23,11 @@ function App() {
   const fetchData = () => {
     setLoading(true);
     const url =
-     activeView === "movies"
-    ? "http://localhost:5000/movies?page=1&limit=100"
-    : activeView === "users"
-    ? "http://localhost:5000/users?page=1&limit=100"
-    : "http://localhost:5000/series?page=1&limit=100";
+      activeView === "movies"
+        ? "http://localhost:5000/movies?page=1&limit=100"
+        : activeView === "users"
+        ? "http://localhost:5000/users?page=1&limit=100"
+        : "http://localhost:5000/series?page=1&limit=100";
     axios
       .get(url)
       .then((res) => {
@@ -148,19 +147,17 @@ function App() {
             </p>
           </div>
         )}
-
+        {!loading && activeView === "home" && <Home />}
+        {!loading && activeView === "dashboard" && <Dashboard />}
+        {!loading && activeView === "series" && (
+          <Series series={filteredItems.length > 0 ? filteredItems : series} />
+        )}
         {!loading && activeView === "movies" && (
           <Movies movies={filteredItems.length > 0 ? filteredItems : movies} />
         )}
         {!loading && activeView === "users" && (
           <Users users={filteredItems.length > 0 ? filteredItems : users} />
         )}
-        {!loading && activeView === "dashboard" && <Dashboard />}
-        {!loading && activeView === "home" && <Home />}
-
-        {!loading && activeView === "series" && (
-  <Series series={filteredItems.length > 0 ? filteredItems : series} />
-)}
       </div>
     </>
   );

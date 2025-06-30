@@ -6,7 +6,8 @@ const seriesSchema = new mongoose.Schema({
   poster: String,
   year: Number,
   seasons: Number,
-  status: String
+  status: String,
+  synopsis: String,
 });
 
 module.exports = mongoose.model("Series", seriesSchema);
