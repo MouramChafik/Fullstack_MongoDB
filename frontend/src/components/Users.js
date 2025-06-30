@@ -48,10 +48,12 @@ function Users({ users = [] }) {
         {currentUsers.map((u) => (
           <div key={u._id || u.name} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <div style={cardStyle}>
+              <div style={{ position: 'relative', display: 'flex',  textAlign: 'center', justifyContent: 'center', alignItems: 'center' }}>
               <div style={circleStyle}>
                 <img src={avatarImage} alt={u.name} style={imageStyle} />
               </div>
-              <h3>{u.name || 'Nom inconnu'}</h3>
+              </div>
+              <h3 style={userTitle}>{u.name || 'Nom inconnu'}</h3>
               <p><strong>Genre :</strong> {u.gender || 'Non précisé'}</p>
               <p><strong>Âge :</strong> {u.age ?? 'Inconnu'}</p>
               <p><strong>Métier :</strong> {u.occupation || 'Non précisé'}</p>
@@ -170,6 +172,14 @@ const usersTitle = {
   fontSize: '24px',
   fontWeight: 'bold',
   marginBottom: '20px',
+};
+
+const userTitle = {
+  color: colors.textPrimary,
+  fontSize: '20px',
+  fontWeight: 'bold',
+  marginBottom: '10px',
+  textAlign: 'center',
 };
 
 export default Users;

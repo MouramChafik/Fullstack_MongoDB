@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import colors from '../colors';
 
 function SearchBar({ activeView, onSelect }) {
   const [query, setQuery] = useState("");

@@ -5,7 +5,26 @@ import colors from '../colors';
 function Navbar({ activeView, setActiveView, onSearch, onSelect }) {
   return (
     <nav style={navbarStyle}>
+        
       <div style={linksStyle}>
+          <button
+          onClick={() => setActiveView('home')}
+            style={activeView === 'home' ? linkActiveStyle : linkStyle}
+        >
+          Accueil
+        </button>
+        <button
+          onClick={() => setActiveView('dashboard')}
+          style={activeView === 'dashboard' ? linkActiveStyle : linkStyle}
+        >
+          Tableau de bord
+        </button>
+        <button
+          onClick={() => setActiveView('series')}
+          style={activeView === 'series' ? linkActiveStyle : linkStyle}
+        >
+          Séries
+        </button>
         <button
           onClick={() => setActiveView('movies')}
           style={activeView === 'movies' ? linkActiveStyle : linkStyle}

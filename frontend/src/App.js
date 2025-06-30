@@ -3,14 +3,19 @@ import axios from "axios";
 import Movies from "./components/Movies";
 import Users from "./components/Users";
 import Navbar from "./components/Navbar";
+import Dashboard from "./components/Dashboard";
 import colors from './colors';
+import  Home from "./components/Home";
+import Series from "./components/Series";
 
 function App() {
   const [movies, setMovies] = useState([]);
   const [users, setUsers] = useState([]);
+  const [series, setSeries] = useState([]);
   const [activeView, setActiveView] = useState("movies");
   const [filteredItems, setFilteredItems] = useState([]);
   const [loading, setLoading] = useState(false);
+  
 
   useEffect(() => {
     fetchData();
@@ -19,14 +24,17 @@ function App() {
   const fetchData = () => {
     setLoading(true);
     const url =
-      activeView === "movies"
-        ? "http://localhost:5000/movies?page=1&limit=100"
-        : "http://localhost:5000/users?page=1&limit=100";
-
+     activeView === "movies"
+    ? "http://localhost:5000/movies?page=1&limit=100"
+    : activeView === "users"
+    ? "http://localhost:5000/users?page=1&limit=100"
+    : "http://localhost:5000/series?page=1&limit=100";
     axios
       .get(url)
       .then((res) => {
         if (activeView === "movies") setMovies(res.data.movies || []);
+        else if (activeView === "users") setUsers(res.data.users || []);
+        else if (activeView === "series") setSeries(res.data.series || []);
         else setUsers(res.data.users || []);
         setFilteredItems([]);
       })
@@ -45,7 +53,7 @@ function App() {
         setActiveView={setActiveView}
         onSelect={handleSelect}
       />
-      <h1 style={dashboardTitleStyle}>Dashboard</h1>
+      <h1 style={dashboardTitleStyle}>Mongo APP</h1>
       <div style={{ padding: "20px", height: "50vh" }}>
         {loading && (
           <div
@@ -72,36 +80,36 @@ function App() {
                 fy=".3125"
                 gradientTransform="scale(1.5)"
               >
-                <stop offset="0" stop-color="rgb(86 175 255)"></stop>
+                <stop offset="0" stopColor="rgb(86 175 255)"></stop>
                 <stop
                   offset=".3"
-                  stop-color="rgb(86 175 255)"
-                  stop-opacity=".9"
+                  stopColor="rgb(86 175 255)"
+                  stopOpacity=".9"
                 ></stop>
                 <stop
                   offset=".6"
-                  stop-color="rgb(86 175 255)"
-                  stop-opacity=".6"
+                  stopColor="rgb(86 175 255)"
+                  stopOpacity=".6"
                 ></stop>
                 <stop
                   offset=".8"
-                  stop-color="rgb(86 175 255)"
-                  stop-opacity=".3"
+                  stopColor="rgb(86 175 255)"
+                  stopOpacity=".3"
                 ></stop>
                 <stop
                   offset="1"
-                  stop-color="rgb(86 175 255)"
-                  stop-opacity="0"
+                  stopColor="rgb(86 175 255)"
+                  stopOpacity="0"
                 ></stop>
               </radialGradient>
               <circle
-                transform-origin="center"
+                transformOrigin="center"
                 fill="none"
                 stroke="url(#a10)"
-                stroke-width="15"
-                stroke-linecap="round"
-                stroke-dasharray="200 1000"
-                stroke-dashoffset="0"
+                strokeWidth="15"
+                strokeLinecap="round"
+                strokeDasharray="200 1000"
+                strokeDashoffset="0"
                 cx="100"
                 cy="100"
                 r="70"
@@ -118,12 +126,12 @@ function App() {
                 ></animateTransform>
               </circle>
               <circle
-                transform-origin="center"
+                transformOrigin="center"
                 fill="none"
                 opacity=".2"
                 stroke="rgb(86 175 255)"
-                stroke-width="15"
-                stroke-linecap="round"
+                strokeWidth="15"
+                strokeLinecap="round"
                 cx="100"
                 cy="100"
                 r="70"
@@ -147,6 +155,12 @@ function App() {
         {!loading && activeView === "users" && (
           <Users users={filteredItems.length > 0 ? filteredItems : users} />
         )}
+        {!loading && activeView === "dashboard" && <Dashboard />}
+        {!loading && activeView === "home" && <Home />}
+
+        {!loading && activeView === "series" && (
+  <Series series={filteredItems.length > 0 ? filteredItems : series} />
+)}
       </div>
     </>
   );

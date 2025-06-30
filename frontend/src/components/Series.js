@@ -2,19 +2,19 @@ import React, { useState } from "react";
 import colors from "../colors";
 import posterImage from "../assets/images/movie.avif";
 
-function Movies({ movies = [] }) {
+function Series({ series = [] }) {
   const itemsPerPage = 12;
   const [currentPage, setCurrentPage] = useState(1);
 
-  const totalPages = Math.ceil(movies.length / itemsPerPage);
+  const totalPages = Math.ceil(series.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentMovies = movies.slice(startIndex, startIndex + itemsPerPage);
+  const currentSeries = series.slice(startIndex, startIndex + itemsPerPage);
 
-  console.log("Films affichés pour la page actuelle :", currentMovies);
+  console.log("Séries affichées pour la page actuelle :", currentSeries);
 
   return (
     <div>
-      <h2 style={moviesTitle}>Films</h2>
+      <h2 style={seriesTitle}>Séries TV</h2>
       <div
         style={{
           display: "flex",
@@ -23,31 +23,36 @@ function Movies({ movies = [] }) {
           justifyContent: "center",
         }}
       >
-        {currentMovies.map((m, idx) => (
+        {currentSeries.map((s, idx) => (
           <div key={idx} style={cardStyle}>
-            <img src={posterImage} alt={m.name} style={imageStyle} />
-            <h3>
-              {m.title.split("(").length > 1 ? (
-                <>
-                  {m.title.split("(")[0].trim()}
-                  <br />
-                  <p>{"(" + m.title.split("(").slice(1).join("(")}</p>
-                </>
-              ) : (
-                m.title
-              )}
-            </h3>
+            <img src={posterImage} alt={s.title} style={imageStyle} />
+            <h3>{s.title}</h3>
             <p>
               <strong>Genres:</strong>{" "}
-              {Array.isArray(m.genres)
-                ? m.genres.join(", ").replace(/\|/g, " - ")
-                : m.genres.replace(/\|/g, " - ")}
+              {Array.isArray(s.genre)
+                ? s.genre.join(", ").replace(/\|/g, " - ")
+                : s.genre.replace(/\|/g, " - ")}
             </p>
-            {m.poster && (
+            {s.year && (
+              <p>
+                <strong>Année:</strong> {s.year}
+              </p>
+            )}
+            {s.seasons && (
+              <p>
+                <strong>Saisons:</strong> {s.seasons}
+              </p>
+            )}
+            {s.status && (
+              <p>
+                <strong>Statut:</strong> {s.status}
+              </p>
+            )}
+            {s.poster && (
               <img
-                src={m.poster}
-                alt={m.title}
-                style={{ width: "100%", height: "auto" }}
+                src={s.poster}
+                alt={s.title}
+                style={{ width: "100%", height: "auto", marginTop: "10px" }}
               />
             )}
           </div>
@@ -81,7 +86,7 @@ const cardStyle = {
   borderRadius: "8px",
   padding: "12px",
   width: "250px",
-  backgroundColor: colors.danger,
+  backgroundColor: colors.success,
   color: colors.white,
 };
 
@@ -125,7 +130,7 @@ const pageIndicatorStyle = {
   color: colors.success,
   fontWeight: "800",
   fontSize: "20px",
-  fontGrid: "Arial, sans-serif",
+  fontFamily: "Arial, sans-serif",
 };
 
 const imageStyle = {
@@ -136,10 +141,11 @@ const imageStyle = {
   marginBottom: "12px",
 };
 
-const moviesTitle = {
+const seriesTitle = {
   color: colors.primary,
   fontSize: "24px",
   fontWeight: "bold",
   marginBottom: "20px",
 };
-export default Movies;
+
+export default Series;

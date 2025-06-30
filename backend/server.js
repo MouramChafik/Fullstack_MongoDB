@@ -8,6 +8,7 @@ require('dotenv').config({ path: '../.env' });
 const moviesRouter = require('./routes/movies');
 const usersRouter = require('./routes/users');
 const searchRoutes = require('./routes/search');
+const seriesRoutes = require("./routes/series");
 
 
 const app = express();
@@ -23,6 +24,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 app.use('/movies', moviesRouter);
 app.use('/users', usersRouter);
 app.use('/', searchRoutes);
+app.use("/series", seriesRoutes);
 
 const PORT = 5000;
 app.listen(PORT, () => {
