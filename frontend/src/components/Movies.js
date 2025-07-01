@@ -26,7 +26,7 @@ function Movies({ movies = [] }) {
         {currentMovies.map((m, idx) => (
           <div key={idx} style={cardStyle}>
             <img src={posterImage} alt={m.name} style={imageStyle} />
-            <h3>
+            <h3 style={movieTitle}>
               {m.title.split("(").length > 1 ? (
                 <>
                   {m.title.split("(")[0].trim()}
@@ -37,19 +37,14 @@ function Movies({ movies = [] }) {
                 m.title
               )}
             </h3>
-            <p>
-              <strong>Genres:</strong>{" "}
+           <p style={paraMovies}>
+              <strong>Genres:{" "} </strong>{" "}
+              <span style={{ color: colors.textSecondary }}>
               {Array.isArray(m.genres)
                 ? m.genres.join(", ").replace(/\|/g, " - ")
                 : m.genres.replace(/\|/g, " - ")}
+                </span>
             </p>
-            {m.poster && (
-              <img
-                src={m.poster}
-                alt={m.title}
-                style={{ width: "100%", height: "auto" }}
-              />
-            )}
           </div>
         ))}
       </div>
@@ -77,12 +72,16 @@ function Movies({ movies = [] }) {
 }
 
 const cardStyle = {
-  border: "1px solid #ccc",
   borderRadius: "8px",
   padding: "12px",
-  width: "250px",
-  backgroundColor: colors.danger,
-  color: colors.white,
+  width: "350px",
+  backgroundColor: colors.backgroundLight,
+  boxShadow: "4px 5px 4px rgba(0, 0, 0, 0.1)",
+  transition: "transform 0.2s, box-shadow 0.2s",
+  "&:hover": {
+    transform: "scale(1.02)",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+  },
 };
 
 const paginationStyle = {
@@ -141,5 +140,20 @@ const moviesTitle = {
   fontSize: "24px",
   fontWeight: "bold",
   marginBottom: "20px",
+};
+
+const movieTitle = {
+    display: "flex",
+    justifyContent: "space-around",
+  textAlign: "center",
+  color: colors.primary,
+  fontSize: "20px",
+  fontWeight: "bold",
+  marginBottom: "10px",
+};
+const paraMovies = {
+  margin: "0 0 10px 0",
+  fontSize: "16px",
+  color: colors.danger,
 };
 export default Movies;

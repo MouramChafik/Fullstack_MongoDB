@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import colors from "../colors";
 import posterImage from "../assets/images/movie.avif";
+import { FaAmazon, FaApple } from "react-icons/fa";
+import { SiNetflix } from "react-icons/si";
+import { TbBrandDisney } from "react-icons/tb";
+import { SiAppletv } from "react-icons/si";
+import { TbBrandHbo } from "react-icons/tb";
+
 
 function Series({ series = [] }) {
   const itemsPerPage = 12;
@@ -75,14 +81,32 @@ function Series({ series = [] }) {
                     </span>
                   </p>
                 )}
-                {s.availableOn && (
-                  <p style={paraSeries}>
-                    <strong>Disponible sur: </strong>{" "}
-                    <span style={{ color: colors.textSecondary }}>
-                      {s.availableOn}
-                    </span>
-                  </p>
-                )}
+               {s.availableOn && (
+  <p style={dispoSeries}>
+    <strong>Disponible sur: </strong>{" "}
+    {s.availableOn.map((platform, index) => {
+      switch (platform) {
+        case "Amazon Prime":
+          return <FaAmazon key={index} style={{ marginRight: "16px", width: "2em", height: "2em" }} />;
+        case "Netflix":
+          return <SiNetflix key={index} style={{ marginRight: "16px", width: "2em", height: "2em" }} />;
+        case "Disney+":
+          return <TbBrandDisney key={index} style={{ marginRight: "16px", width: "2em", height: "2em" }} />;
+        case "Hulu":
+          return "hulu";
+        case "Apple TV":
+          return <SiAppletv  key={index} style={{ marginRight: "16px", width: "2em", height: "2em" }} />;
+        case "HBO Max":
+          return <TbBrandHbo key={index} style={{ marginRight: "16px", width: "2em", height: "2em" }} />;
+        case "Apple TV+":
+          return <FaApple key={index} style={{ marginRight: "16px",width: "2em", height: "2em" }} />;
+        default:
+          return null;
+      }
+    })}
+  </p>
+)}
+
               </div>
             </div>
           </div>
@@ -116,7 +140,7 @@ const cardStyle = {
   padding: "12px",
   width: "550px",
   backgroundColor: colors.backgroundLight,
-  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+  boxShadow: "4px 5px 4px rgba(0, 0, 0, 0.1)",
   transition: "transform 0.2s, box-shadow 0.2s",
   "&:hover": {
     transform: "scale(1.02)",
@@ -195,6 +219,15 @@ const paraSeries = {
   margin: "0 0 10px 0",
   fontSize: "16px",
   color: colors.danger,
+};
+
+const dispoSeries = {
+  margin: "0 0 10px 0",
+  fontSize: "16px",
+  color: colors.danger,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-around",
 };
 
 export default Series;

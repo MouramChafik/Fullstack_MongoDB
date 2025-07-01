@@ -86,7 +86,6 @@ function Users({ users = [] }) {
         </button>
       </div>
 
-      {/* Popup films notés */}
       <MoviesPopup
         movies={popupMovies}
         userName={popupUserName}
@@ -103,7 +102,7 @@ const cardStyle = {
   borderRadius: '8px',
   padding: '12px',
   width: '250px',
-  backgroundColor: colors.secondary,
+  backgroundColor: colors.backgroundPrimary,
   color: colors.white,
 };
 
