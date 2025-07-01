@@ -12,7 +12,7 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [users, setUsers] = useState([]);
   const [series, setSeries] = useState([]);
-  const [activeView, setActiveView] = useState("movies");
+  const [activeView, setActiveView] = useState("home");
   const [filteredItems, setFilteredItems] = useState([]);
   const [loading, setLoading] = useState(false);
 

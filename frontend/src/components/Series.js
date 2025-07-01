@@ -26,39 +26,65 @@ function Series({ series = [] }) {
         {currentSeries.map((s, idx) => (
           <div key={idx} style={cardStyle}>
             <img src={posterImage} alt={s.title} style={imageStyle} />
-            <h3>{s.title}</h3>
-            <p>
-              <strong>Genres:</strong>{" "}
-              {Array.isArray(s.genre)
-                ? s.genre.join(", ").replace(/\|/g, " - ")
-                : s.genre.replace(/\|/g, " - ")}
-            </p>
-            {s.language && (
-                <p>
-                    <strong>Langue:</strong> {s.language}
+            <h3 style={serieTitle}>{s.title}</h3>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <div style={{ flex: 1, marginRight: "20px" }}>
+                <p style={paraSeries}>
+                  <strong>Genres: </strong>{" "}
+                  <span style={{ color: colors.textSecondary }}>
+                    {Array.isArray(s.genre)
+                      ? s.genre.join(", ").replace(/\|/g, " - ")
+                      : s.genre.replace(/\|/g, " - ")}
+                  </span>
                 </p>
-            )}
-            {s.year && (
-              <p>
-                <strong>Année:</strong> {s.year}
-              </p>
-            )}
-            {s.seasons && (
-              <p>
-                <strong>Saisons:</strong> {s.seasons}
-              </p>
-            )}
-            {
-                s.synopsis && (
-                  <p style={{ marginTop: "10px" }}>
-                    <strong>Synopsis:</strong> {s.synopsis}
+                {s.language && (
+                  <p style={paraSeries}>
+                    <strong>Langue: </strong>
+                    <span style={{ color: colors.textSecondary }}>
+                      {s.language}
+                    </span>
                   </p>
                 )}
-            {s.availableOn && (
-                <p>
-                    <strong>Disponible sur:</strong> {s.availableOn}
-                </p>
+                {s.year && (
+                  <p style={paraSeries}>
+                    <strong>Année: </strong>{" "}
+                    <span style={{ color: colors.textSecondary }}>
+                      {s.year}
+                    </span>
+                  </p>
                 )}
+                {s.seasons && (
+                  <p style={paraSeries}>
+                    <strong>Saisons: </strong>
+                    <span style={{ color: colors.textSecondary }}>
+                      {s.seasons}
+                    </span>
+                  </p>
+                )}
+                {s.synopsis && (
+                  <p style={paraSeries}>
+                    <strong>Synopsis: </strong>{" "}
+                    <span style={{ color: colors.textSecondary }}>
+                      {s.synopsis}
+                    </span>
+                  </p>
+                )}
+                {s.availableOn && (
+                  <p style={paraSeries}>
+                    <strong>Disponible sur: </strong>{" "}
+                    <span style={{ color: colors.textSecondary }}>
+                      {s.availableOn}
+                    </span>
+                  </p>
+                )}
+              </div>
+            </div>
           </div>
         ))}
       </div>
@@ -86,12 +112,16 @@ function Series({ series = [] }) {
 }
 
 const cardStyle = {
-  border: "1px solid #ccc",
   borderRadius: "8px",
   padding: "12px",
-  width: "250px",
-  backgroundColor: colors.success,
-  color: colors.white,
+  width: "550px",
+  backgroundColor: colors.backgroundLight,
+  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+  transition: "transform 0.2s, box-shadow 0.2s",
+  "&:hover": {
+    transform: "scale(1.02)",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+  },
 };
 
 const paginationStyle = {
@@ -150,6 +180,21 @@ const seriesTitle = {
   fontSize: "24px",
   fontWeight: "bold",
   marginBottom: "20px",
+};
+
+const serieTitle = {
+    display: "flex",
+    justifyContent: "center",
+  color: colors.primary,
+  fontSize: "20px",
+  fontWeight: "bold",
+  marginBottom: "10px",
+};
+
+const paraSeries = {
+  margin: "0 0 10px 0",
+  fontSize: "16px",
+  color: colors.danger,
 };
 
 export default Series;
